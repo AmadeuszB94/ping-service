@@ -1,1 +1,17 @@
 
+name: Ping Service
+
+on:
+  workflow_dispatch:  # Umożliwia ręczne uruchamianie workflow
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Loop to send ping every 30 seconds
+        run: |
+          for i in {1..120}; do
+            curl -s -o /dev/null -w "%{http_code}" https://tv-capital-webhook.onrender.com
+            echo "Ping sent at $(date)"
+            sleep 30
+          done
